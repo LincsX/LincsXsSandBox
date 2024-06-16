@@ -6,27 +6,7 @@ app.use(express.json())
 
 const port = process.env.PORT ?? 4000
 
-app.get('/books', async (request, response) => {
-  const books = await prismaClient.book.findMany()
-  return response.json(books)
-})
-
-app.post('/books', async (request, response) => {
-  const { description, name } = request.body
-  const book = await prismaClient.book.create({
-    data: {
-      description,
-      name,
-    },
-  })
-  return response.json(book)
-})
-
-// app.listen(port, () => console.log('Server is running on port ', port))
-
-
-// =========================================================
-
+app.get('/', async (request, response) => {
 // Array com os links alternados
 const links = ["http://example1.com", "http://example2.com"];
 
@@ -83,3 +63,28 @@ async function redirect() {
 
 // Executa a função de redirecionamento ao carregar a página
 window.onload = redirect;
+
+  return response.json()
+})
+
+app.get('/books', async (request, response) => {
+  const books = await prismaClient.book.findMany()
+  return response.json(books)
+})
+
+app.post('/books', async (request, response) => {
+  const { description, name } = request.body
+  const book = await prismaClient.book.create({
+    data: {
+      description,
+      name,
+    },
+  })
+  return response.json(book)
+})
+
+app.listen(port, () => console.log('Server is running on port ', port))
+
+
+// =========================================================
+
